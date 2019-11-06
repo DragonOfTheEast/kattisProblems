@@ -1,0 +1,73 @@
+
+
+class Point:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+
+def ccw(A,B,C):
+    return (C.y-A.y)*(B.x-A.x) > (B.y-A.y)*(C.x-A.x)
+
+def intersect(A,B,C,D):
+	return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
+
+
+def turn_to_integer(num):
+    # count = 0
+    # index = 0
+    # for i in num:
+    #     index +=1
+    #     if i != '.':
+    #         count +=1
+    #     else:
+    #         break
+    # # if count == 1:
+    # #     num = "00" + num
+    # # elif count == 2:
+    # #     num = "0" + num
+    #
+    # index-=1
+    # if len(num)-1 - index != 6:
+    #     zeros = 6 - (len(num) - 3 - index)
+    #     #print(zeros)
+    #     for i in range(zeros):
+    #         num +="0"
+
+    return num.replace(".", "")
+
+
+while True:
+    line = []
+    n = int(input())
+    ans = 0
+
+    if n == 0:
+        break
+    for _ in range(n):
+        temp = input().split()
+        point1 = [int(turn_to_integer(i)) for i in temp[:2]]
+        point2 = [int(turn_to_integer(i)) for i in temp[2:]]
+        point1 = Point(point1[0], point1[1])
+        point2 = Point(point2[0], point2[1])
+        line.append((point1, point2))
+        #print(line[0][1].y)
+
+    for i in range(len(line) - 2):
+        for j in range(i+1, len(line) - 1):
+            # print(line[i][0].x, line[i][0].y, line[i][1].x, line[i][1].y)
+            # print(line[j][0].x, line[j][0].y, line[j][1].x, line[j][1].y)
+            # break
+            if intersect(line[i][0], line[i][1], line[j][0], line[j][1]) is True:
+                #print("hereeeeeee")
+                for k in range(j+1, len(line)):
+                    #print("here")
+                    if intersect(line[i][0], line[i][1], line[k][0], line[k][1]) and \
+                            intersect(line[j][0], line[j][1], line[k][0], line[k][1]):
+                        ans +=1
+
+    print(ans)
+
+
+
+
