@@ -1,0 +1,34 @@
+
+def LIS(arr):
+    temp = [[] for _ in range(len(arr))]
+
+    temp[0].append(arr[0])
+
+    for i in range(1, len(arr)):
+        for j in range(i):
+            if arr[i] > arr[j] and (len(temp[i]) < len(temp[j]) + 1):
+                temp[i] = temp[j][:]
+
+        temp[i].append(arr[i])
+
+   # print(temp)
+    ans = temp[0]
+    for i in temp:
+        if len(i) > len(ans):
+            ans = i
+        elif len(i) == len(ans) and sum(i) < sum(ans):
+            ans = i
+
+    return ans
+while True:
+   n = input()
+
+   if n == "0":
+       break
+   arr = [int(i) for i in n.split()[1:]]
+
+   n = LIS(arr)
+
+   print(len(n) , str(n).replace("[", "").replace("]", "").replace(",", ""))
+
+   #print(arr)
