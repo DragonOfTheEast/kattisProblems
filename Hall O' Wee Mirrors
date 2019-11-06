@@ -1,0 +1,47 @@
+class Point(object):
+    def __init__(self, x, y):
+       self.x = x
+       self.y = y
+
+    def __sub__(self, other):
+        return Point(self.x - other.x , self.y - other.y)
+
+    def __str__(self):
+        st = str(self.x)
+        st = st + " " + str(self.y)
+        return st
+
+def dot(a, b):
+    return a.x * b.x + a.y * b.y
+
+n = int(input())
+while  n != 0:
+    mirrors = []
+    for i in range(n):
+        a = [int(j) for j in input().split()]
+        temp = Point(a[0], a[1])
+        temp2 = Point(a[2], a[3])
+        mirrors.append([temp, temp2])
+
+    n = int(input())
+    positions = []
+    for i in range(n):
+        a = [int(j) for j in input().split()]
+        positions.append(Point(a[0], a[1]))
+
+    for pos in positions:
+        count = 0
+        for mir in mirrors:
+            vector1 = mir[1] - mir[0]
+            vector2 = mir[0] - mir[1]
+            position1 = pos - mir[0]
+            position2 = pos - mir[1]
+
+           # print(vector1, position1, position2)
+            #print(dot(vector1, position1) , dot(vector2, position2))
+            if dot(vector1, position1) >= 0 and dot(vector2, position2) >= 0:
+                count +=1
+        print(count)
+    print()
+    n = int(input())
+
