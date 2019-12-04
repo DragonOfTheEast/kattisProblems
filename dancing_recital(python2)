@@ -1,0 +1,60 @@
+import sys
+
+# def split_word(char):
+#     return [i for i in char]
+def dis(string, string2):
+    ret = 0
+    arr = [0]*26
+    arr2 = [0]*26
+
+    for i in string:
+        arr[ord(i) - ord('A')] += 1
+
+    for i in string2:
+        arr2[ord(i) - ord('A')] += 1
+
+    for i in range(26):
+        if arr2[i] == 1 == arr[i]:
+            ret += 1
+
+    return ret
+
+
+def next_permutation(a):
+    for i in reversed(range(len(a) - 1)):
+        if a[i] < a[i + 1]:
+            break
+    else:
+        return False
+
+
+    j = next(j for j in reversed(range(i + 1, len(a))) if a[i] < a[j])
+
+    a[i], a[j] = a[j], a[i]
+
+    a[i + 1:] = reversed(a[i + 1:])
+    return True
+n = int(raw_input())
+
+arr = []
+for i in range(n):
+    arr.append((raw_input()))
+
+
+matrix = [[0 for i in range(n)] for i in range(n)]
+
+for i in range(n-1):
+    for j in range(i+1, n):
+        matrix[i][j] = matrix[j][i] = dis(arr[i], arr[j])
+
+
+best = sys.maxsize
+m = [i for i in range(n)]
+while next_permutation(m):
+    tot = 0
+    for _ in range(len(m)-1):
+        tot += matrix[m[_]][m[_+1]]
+    if tot < best:
+        best = tot
+
+print(best)
